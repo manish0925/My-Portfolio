@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Experience - {% if profile %}{{ profile.name }}{% endif %}{% endblock %}
+
+{% block content %}
+<section class="experience">
+    <div class="section-container">
+        <h1 class="page-title">Experience</h1>
+        
+        <div class="timeline">
+            {% for exp in experiences %}
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-date">
+                    <span>{{ exp.start_date|date:"M Y" }}</span>
+                    {% if exp.is_current %}
+                    <span class="present">Present</span>
+                    {% else %}
+                    <span>- {{ exp.end_date|date:"M Y" }}</span>
+                    {% endif %}
+                </div>
+                <div class="timeline-content">
+                    <h2>{{ exp.position }}</h2>
+                    <h3>{{ exp.company }}</h3>
+                    <p>{{ exp.description }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-state">
+                <i class="fas fa-briefcase"></i>
+                <p>No experience added yet. Add your work experience from the admin panel.</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="download-section">
+            <a href="{% url 'contact' %}" class="btn btn-primary">Get In Touch</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

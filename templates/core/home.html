@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% if profile %}{{ profile.name }}{% endif %} - Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-greeting">Hello, I'm</span>
+        <h1 class="hero-name">{% if profile %}{{ profile.name|default:"Your Name" }}{% else %}Your Name{% endif %}</h1>
+        <h2 class="hero-title">{% if profile %}{{ profile.title|default:"Full Stack Developer" }}{% else %}Full Stack Developer{% endif %}</h2>
+        <p class="hero-tagline">{% if profile %}{{ profile.tagline|default:"Building digital experiences that matter" }}{% else %}Building digital experiences that matter{% endif %}</p>
+        <div class="hero-cta">
+            <a href="{% url 'project' %}" class="btn btn-primary">View My Work</a>
+            <a href="{% url 'contact' %}" class="btn btn-outline">Get In Touch</a>
+        </div>
+    </div>
+    <div class="hero-image">
+        {% if profile and profile.profile_image %}
+        <img src="{{ profile.profile_image.url }}" alt="{% if profile %}{{ profile.name }}{% endif %}">
+        {% else %}
+        <div class="placeholder-avatar">
+            <i class="fas fa-user"></i>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% if featured_projects %}
+<section class="featured-projects">
+    <div class="section-container">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            {% for project in featured_projects %}
+            <div class="project-card">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                {% else %}
+                <div class="project-placeholder">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                {% endif %}
+                <div class="project-info">
+                    <h3>{{ project.title }}</h3>
+                    <p>{{ project.description|truncatechars:100 }}</p>
+                    <div class="project-links">
+                        {% if project.github_link %}
+                        <a href="{{ project.github_link }}" target="_blank"><i class="fab fa-github"></i></a>
+                        {% endif %}
+                        {% if project.live_link %}
+                        <a href="{{ project.live_link }}" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="view-all">
+            <a href="{% url 'project' %}" class="btn btn-outline">View All Projects</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="cta-section">
+    <div class="section-container">
+        <h2>Let's Work Together</h2>
+        <p>Have a project in mind? Let's create something amazing.</p>
+        <a href="{% url 'contact' %}" class="btn btn-primary">Start a Project</a>
+    </div>
+</section>
+{% endblock %}

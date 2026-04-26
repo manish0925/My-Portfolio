@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Skills - {% if profile %}{{ profile.name }}{% endif %}{% endblock %}
+
+{% block content %}
+<section class="skills">
+    <div class="section-container">
+        <h1 class="page-title">Skills</h1>
+        
+        {% for category, skills_list in skills_by_category.items %}
+        {% if skills_list %}
+        <div class="skill-category">
+            <h2 class="category-title">{{ category.name }}</h2>
+            <div class="skills-grid">
+                {% for skill in skills_list %}
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <span class="skill-name">{{ skill.name }}</span>
+                        <span class="skill-percentage">{{ skill.proficiency_level }}%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: {{ skill.proficiency_level }}%"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        
+        {% if uncat_skills %}
+        <div class="skill-category">
+            <h2 class="category-title">Other Skills</h2>
+            <div class="skills-grid">
+                {% for skill in uncat_skills %}
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <span class="skill-name">{{ skill.name }}</span>
+                        <span class="skill-percentage">{{ skill.proficiency_level }}%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: {{ skill.proficiency_level }}%"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if not skills_by_category and not uncat_skills %}
+        <div class="empty-state">
+            <i class="fas fa-tools"></i>
+            <p>No skills added yet. Add your skills from the admin panel.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

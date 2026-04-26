@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact - {% if profile %}{{ profile.name }}{% endif %}{% endblock %}
+
+{% block content %}
+<section class="contact">
+    <div class="section-container">
+        <h1 class="page-title">Get In Touch</h1>
+        
+        <div class="contact-content">
+            <div class="contact-info">
+                <h2>Let's Connect</h2>
+                <p>Have a question or want to work together? Drop me a message!</p>
+                
+                <div class="contact-details">
+                    {% if profile and profile.email %}
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <span>{{ profile.email }}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if profile and profile.phone %}
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <span>{{ profile.phone }}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if profile and profile.location %}
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <span>{{ profile.location }}</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="social-connect">
+                    <h3>Follow Me</h3>
+                    <div class="social-links">
+                        {% if profile and profile.github %}
+                        <a href="{{ profile.github }}" target="_blank"><i class="fab fa-github"></i></a>
+                        {% endif %}
+                        {% if profile and profile.linkedin %}
+                        <a href="{{ profile.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        {% endif %}
+                        {% if profile and profile.twitter %}
+                        <a href="{{ profile.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <form method="POST" action="{% url 'contact' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Subject (Optional)</label>
+                        <input type="text" id="subject" name="subject">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About - {% if profile %}{{ profile.name }}{% endif %}{% endblock %}
+
+{% block content %}
+<section class="about">
+    <div class="section-container">
+        <h1 class="page-title">About Me</h1>
+        
+        <div class="about-content">
+            <div class="about-image">
+                {% if profile and profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
+                {% else %}
+                <div class="placeholder-image">
+                    <i class="fas fa-user"></i>
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="about-info">
+                <h2>{% if profile %}{{ profile.name|default:"Your Name" }}{% else %}Your Name{% endif %}</h2>
+                <h3>{% if profile %}{{ profile.title|default:"Full Stack Developer" }}{% else %}Full Stack Developer{% endif %}</h3>
+                <p class="bio">{% if profile %}{{ profile.bio|default:"Write your bio here. Tell visitors about yourself, your experience, and what makes you unique. Highlight your key skills and what drives you in your work." }}{% else %}Write your bio here. Tell visitors about yourself, your experience, and what makes you unique.{% endif %}</p>
+                
+                <div class="contact-info">
+                    {% if profile and profile.email %}
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>{{ profile.email }}</span>
+                    </div>
+                    {% endif %}
+                    {% if profile and profile.phone %}
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>{{ profile.phone }}</span>
+                    </div>
+                    {% endif %}
+                    {% if profile and profile.location %}
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ profile.location }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="social-links">
+                    {% if profile and profile.github %}
+                    <a href="{{ profile.github }}" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                    {% endif %}
+                    {% if profile and profile.linkedin %}
+                    <a href="{{ profile.linkedin }}" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    {% endif %}
+                    {% if profile and profile.twitter %}
+                    <a href="{{ profile.twitter }}" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
+                    {% endif %}
+                </div>
+                
+                <a href="{% static 'resume.pdf' %}" class="btn btn-primary" download><i class="fas fa-download"></i> Download Resume</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
