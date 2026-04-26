@@ -2,7 +2,11 @@
 
 pip install -r requirements.txt
 
-python manage.py makemigrations
+# FORCE CREATE MIGRATIONS
+python manage.py makemigrations core
+
+# APPLY MIGRATIONS
 python manage.py migrate
 
+# COLLECT STATIC
 python manage.py collectstatic --noinput
