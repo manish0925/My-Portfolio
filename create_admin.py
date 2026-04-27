@@ -1,7 +1,7 @@
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'your_project_name.settings') # apne project ka naam likhein
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio.settings') # apne project ka naam likhein
 django.setup()
 
 from django.contrib.auth.models import User
